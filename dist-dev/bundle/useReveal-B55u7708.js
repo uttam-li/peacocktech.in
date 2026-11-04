@@ -1,0 +1,1 @@
+import{h as e}from"./client-BM-BcBv2.js";var t=e();function n(e=.15){let n=(0,t.useRef)(null);return(0,t.useEffect)(()=>{let t=n.current;if(!t)return;let r=new IntersectionObserver(e=>{e[0].isIntersecting&&(t.setAttribute(`data-in`,``),r.disconnect())},{threshold:e});return r.observe(t),()=>r.disconnect()},[e]),n}export{n as t};

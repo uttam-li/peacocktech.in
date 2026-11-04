@@ -1,0 +1,13 @@
+{
+  "$comment": "Single source of truth for every clean-URL page. ADDING A SERVICE PAGE = add its slug here (scaffolder does it: bun run add:service). Consumers: vite.config.ts (entries + clean URLs), scripts/pages.mjs (prerender/SW/sitemap), src/lib/pages.ts (prefetch lists).",
+  "pages": [
+    "/",
+    "/about",
+    "/ai",
+    "/erp",
+    "/contact",
+    "/mobile-app",
+    "/ux-design"
+  ],
+  "notfound": "/404"
+}

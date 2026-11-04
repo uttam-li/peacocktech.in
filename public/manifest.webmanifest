@@ -1,0 +1,14 @@
+{
+  "name": "Peacock Technotrics",
+  "short_name": "Peacock",
+  "description": "Software built around your business — ERP, custom software, mobile apps, AI systems and UX from Surat, India.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a1510",
+  "theme_color": "#0a1510",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "og-cover.png", "sizes": "1200x630", "type": "image/png", "purpose": "any" }
+  ]
+}

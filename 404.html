@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>
+    /* Canonical clean URL: /404.html -> /404 (keeps ?lang). No loop:
+       error pages keep the typed URL, so this only fires on real .html hits. */
+    (function () { try { var p = location.pathname; if (/\/404\.html$/i.test(p)) location.replace(p.replace(/\/404\.html$/i, '/404') + location.search + location.hash); } catch (e) {} })();
+  </script>
+  <script>
+    (function () {
+      try {
+        var m = location.search.match(/[?&]lang=(gu|hi|en)\b/);
+        var l = m ? m[1] : 'en';
+        try {
+          if (m) localStorage.setItem('pt-lang', l);
+          else { var s = localStorage.getItem('pt-lang'); if (s === 'gu' || s === 'hi') l = s; }
+        } catch (e) { /* private mode: ?lang= only */ }
+        document.documentElement.lang = l;
+        var dict = {
+          gu: {
+            title: 'પેજ મળ્યું નથી | Peacock Technotrics',
+            desc: 'માગેલું પેજ મળ્યું નથી. Peacock Technotrics, સુરત — હોમ પર પાછા જાઓ.'
+          },
+          hi: {
+            title: 'पेज नहीं मिला | Peacock Technotrics',
+            desc: 'माँगा गया पेज नहीं मिला। Peacock Technotrics, सूरत — होम पर लौटें।'
+          }
+        };
+        var d = dict[l];
+        if (d) {
+          document.title = d.title;
+          var md = document.querySelector('meta[name="description"]');
+          if (md) md.setAttribute('content', d.desc);
+        }
+      } catch (e) { /* keep English defaults */ }
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Page not found | Peacock Technotrics</title>
+  <meta name="description" content="The page you asked for does not exist or has moved. Peacock Technotrics, Surat.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a1510">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="/src/assets/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/src/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/src/styles/index.css">
+  <link rel="stylesheet" href="/src/styles/notfound.css">
+  <style>
+    .boot-fallback{min-height:100svh;display:grid;place-content:center;padding:32px;background:#0a1510}
+    .boot-fallback i{display:block;width:min(220px,50vw);height:2px;background:#223a2f;overflow:hidden;position:relative}
+    .boot-fallback i::after{content:"";position:absolute;inset:0;width:40%;background:#3fd488;animation:boot-slide 1.1s ease-in-out infinite}
+    @keyframes boot-slide{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
+    @media (prefers-reduced-motion:reduce){.boot-fallback i::after{animation:none;width:100%}}
+    .boot-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div class="boot-fallback" role="status" aria-label="Loading">
+      <i aria-hidden="true"></i>
+      <span class="boot-sr">Loading…</span>
+    </div>
+  </div>
+  <script type="module" src="/src/pages/notfound/main.tsx"></script>
+</body>
+</html>

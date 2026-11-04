@@ -1,0 +1,68 @@
+:root{--font-sans:"Inter","Noto Sans Gujarati","Noto Sans Devanagari",system-ui,-apple-system,"Segoe UI",sans-serif;--font-serif:"Bricolage Grotesque","Inter",system-ui,"Noto Sans Gujarati","Noto Sans Devanagari",sans-serif;--font-mono:"Cascadia Code",ui-monospace,Consolas,monospace;
+--plate:#f8faf2;--forest:#264438;--paper:#0a1510;--paper-bright:#10211a;--ink:#f3f1e6;--muted:#9fb2a4;--line:#223a2f;--line-strong:#33513f;--green:#00a058;--green-deep:#3fd488;--lime:#b8d000;--yellow:#e8e000;--pearl:#f3f1e6;--night:#14291f;--night-line:#2d4739;--night-line-strong:#3a5247;--night-muted:#8ba293;--night-soft:#aab6ac;--ease:cubic-bezier(.22,1,.36,1);--pad:clamp(20px,4vw,64px);--edge:max(var(--pad),calc((100vw - 1440px)/2));--head-h:78px;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--paper);scrollbar-width:none;-ms-overflow-style:none;scroll-behavior:smooth}
+html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0}
+body{margin:0;padding-top:calc(var(--head-h) + env(safe-area-inset-top));background:var(--paper);color:var(--ink);font:16px/1.5 var(--font-sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
+::selection{background:var(--yellow);color:var(--ink)}
+:focus-visible{outline:2px solid var(--green-deep);outline-offset:4px}
+.rise{opacity:0}
+.js #contact[data-in] .rise{animation:rise 1s var(--ease) both}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.rise{animation:none;opacity:1;transform:none}}
+
+/* ---------- contact ticket ---------- */
+/* Sub-page header stays fixed like home: the global fixed header applies;
+   this only forces it visible (sub-pages pass visible=true, no scroll reveal).
+   header.site-header (not .site-header) so this wins over the global rule
+   even when the built CSS loads after this file. */
+header.site-header{opacity:1;pointer-events:auto;transform:none;transition:none}
+.contact-ticket .pass{--ct-split:60%;--ct-notch:14px;display:grid;grid-template-columns:1.5fr 1fr;width:min(1100px,100%);margin:0 auto;background:transparent;color:var(--ink);border-radius:28px;box-shadow:0 50px 90px -40px #000;position:relative;overflow:hidden;perspective:1200px;transform-style:preserve-3d}
+@media(min-width:861px){
+  .contact-ticket .pass{
+    -webkit-mask-image:radial-gradient(circle var(--ct-notch) at var(--ct-split) 0,transparent 98%,#000 100%),radial-gradient(circle var(--ct-notch) at var(--ct-split) 100%,transparent 98%,#000 100%);
+    -webkit-mask-composite:source-in;
+    mask-image:radial-gradient(circle var(--ct-notch) at var(--ct-split) 0,transparent 98%,#000 100%),radial-gradient(circle var(--ct-notch) at var(--ct-split) 100%,transparent 98%,#000 100%);
+    mask-composite:intersect;
+  }
+}
+@media(prefers-reduced-motion:reduce){.contact-ticket .r{transform:none;animation:none}}
+html:not(.js) .contact-ticket .r{transform:none}
+.contact-ticket .r{background:var(--forest);color:var(--ink);padding:0;display:flex;flex-direction:column;border-left:2px dashed var(--line-strong);transform:rotateY(180deg);transform-origin:left center;backface-visibility:hidden}
+.contact-ticket .pass{--muted:var(--night-soft)}
+.contact-ticket .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 20px}
+.contact-ticket .grid .w{grid-column:1/-1}
+@media(max-width:860px){.contact-ticket .grid{grid-template-columns:1fr}}
+.contact-ticket .bx input,.contact-ticket .bx textarea{width:100%;background:transparent;border:1px solid var(--night-line-strong);color:var(--pearl);border-radius:14px;padding:15px 18px;font-size:16px;transition:border-color .3s,box-shadow .4s var(--ease),background .3s}
+.contact-ticket .bx input::placeholder,.contact-ticket .bx textarea::placeholder{color:var(--night-muted)}
+.contact-ticket .bx input:hover,.contact-ticket .bx textarea:hover{border-color:var(--green-deep)}
+.contact-ticket .bx input:focus,.contact-ticket .bx textarea:focus{outline:0;border-color:var(--green-deep);box-shadow:0 0 0 4px rgba(63,212,136,.15);background:transparent}
+.contact-ticket .bx input:user-invalid,.contact-ticket .bx textarea:user-invalid{border-color:#e5806b;box-shadow:0 0 0 4px rgba(229,128,107,.15)}
+.contact-snackbar{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));z-index:250;display:flex;align-items:center;gap:12px;max-width:calc(100vw - 40px);padding:14px 18px;background:var(--paper-bright);border:1px solid var(--line-strong);border-left:2px solid #ff9d8a;box-shadow:0 24px 48px -24px #000;transform:translateX(-50%);animation:snack-in .35s var(--ease) both;font-family:var(--font-mono);font-size:11px;line-height:1.5;letter-spacing:.06em;color:var(--ink)}
+.contact-snackbar::before{content:"";width:6px;height:6px;border-radius:50%;background:#ff9d8a;flex:none}
+@keyframes snack-in{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+@media(prefers-reduced-motion:reduce){.contact-snackbar{animation:none}}
+/* Task 6: direct contact links are real touch targets. */
+.contact-ticket address a{display:inline-flex;align-items:center;min-height:44px}
+.contact-ticket .bx.w{grid-column:1/-1}
+.contact-ticket .btn{border:0;cursor:pointer;font:600 16px/1.4 var(--font-sans);padding:16px 28px;border-radius:999px;background:var(--yellow);color:var(--forest);transition:transform .5s var(--ease),box-shadow .5s var(--ease),background-color .25s}
+.contact-ticket .btn:hover{background:var(--green-deep);color:var(--forest);transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(63,212,136,.5)}
+.contact-ticket .btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
+.contact-ticket .ok{display:none;padding:22px;border:1px solid var(--green);border-radius:14px;color:var(--green-deep)}
+.contact-ticket form.sent .ok{display:block}
+.contact-ticket form.sent .grid,.contact-ticket form.sent .btn,.contact-ticket form.sent br{display:none}
+.contact-ticket .r .map{flex:1;min-height:260px;display:flex;flex-direction:column}
+.contact-ticket .r .map-preview__btn{min-height:44px;padding:12px 22px;border-radius:999px;border:1px solid var(--line-strong);background:var(--yellow);color:var(--forest);font-family:var(--font-sans);font-weight:600;font-size:15px;cursor:pointer;transition:background-color .25s ease}
+.contact-ticket .r .map-preview__btn:hover:not(:disabled){background:var(--green-deep)}
+.contact-ticket .r .map-preview__btn:disabled{opacity:.55;cursor:wait}
+.contact-ticket .r iframe{width:100%;height:100%;border:0;display:block;filter:invert(.92) hue-rotate(150deg) saturate(.5) contrast(.9)}
+.contact-ticket .r .map.is-live iframe{animation:mapIn .6s ease both}
+@keyframes mapIn{from{opacity:0}to{opacity:1}}
+@media(max-width:860px){
+  .contact-ticket .pass{grid-template-columns:1fr}
+  .contact-ticket .r{border-left:0;border-top:2px dashed #52725f}
+  .contact-ticket .pass::before,.contact-ticket .pass::after{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .contact-ticket .btn{transition:none}
+}

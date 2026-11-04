@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>
+    (function () {
+      try {
+        var m = location.search.match(/[?&]lang=(gu|hi|en)\b/);
+        var l = m ? m[1] : 'en';
+        try {
+          if (m) localStorage.setItem('pt-lang', l);
+          else { var s = localStorage.getItem('pt-lang'); if (s === 'gu' || s === 'hi') l = s; }
+        } catch (e) { /* private mode: ?lang= only */ }
+        document.documentElement.lang = l;
+        var dict = {
+          gu: {
+            title: 'સંપર્ક કરો | Peacock Technotrics',
+            desc: 'Peacock Technotrics સાથે પ્રોજેક્ટ શરૂ કરો — ડાયમંડ અને જ્વેલરી ERP, સોફ્ટવેર, એપ્સ અને AI.'
+          },
+          hi: {
+            title: 'संपर्क करें | Peacock Technotrics',
+            desc: 'Peacock Technotrics के साथ प्रोजेक्ट शुरू करें — डायमंड और ज्वेलरी ERP, सॉफ़्टवेयर, ऐप्स और AI।'
+          }
+        };
+        var d = dict[l];
+        if (d) {
+          document.title = d.title;
+          var md = document.querySelector('meta[name="description"]');
+          if (md) md.setAttribute('content', d.desc);
+        }
+      } catch (e) { /* keep English defaults */ }
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Contact Us | Peacock Technotrics</title>
+  <meta name="description" content="Start a project with Peacock Technotrics — diamond and jewellery ERP, software, apps and AI.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a1510">
+  <script type="speculationrules">
+  {"prerender":[{"source":"document","where":{"href_matches":"/*\\.html"},"eagerness":"moderate"}]}
+  </script>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="dns-prefetch" href="https://formsubmit.co">
+  <link rel="dns-prefetch" href="https://maps.google.com">
+  <meta property="og:image" content="og-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="og-cover.png">
+  <link rel="preload" href="./bundle/bricolage-latin-DLoelf7F.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./bundle/inter-latin-Dx4kXJAl.woff2" as="font" type="font/woff2" crossorigin>
+    <script type="module" crossorigin src="./bundle/contact-DIMlvTRO.js"></script>
+  <link rel="modulepreload" crossorigin href="./bundle/client-BM-BcBv2.js">
+  <link rel="stylesheet" crossorigin href="./bundle/client-BE-Ivj6X.css">
+  <link rel="stylesheet" crossorigin href="./bundle/contact-BIdMFvYe.css">
+</head>
+<body>
+  <div id="root"><header class="site-header is-visible" aria-label="Site header"><div class="site-header__inner"><div class="site-header__brand flex min-w-0 items-center gap-4"><a class="brand-plate" href="./#top" aria-label="Peacock Technotrics — home"><picture><source srcset="./bundle/peacock-logo-480-i-EFLBad.webp" type="image/webp"><img alt="" width="480" height="206" decoding="async" fetchpriority="high" src="./bundle/peacock-logo-480-BeZ1LHOw.png" class=""></picture></a><p class="mono-label ml-1 hidden border-l border-line-strong pl-6 text-muted min-[1560px]:block">Software studio<br>Surat, India <span class="loc-sep" aria-hidden="true"></span> working worldwide</p></div><nav class="site-header__nav hidden items-center gap-5 justify-self-center md:flex xl:gap-8" aria-label="Primary"><a class="nav-link" href="./#top">Home</a><div class="nav-group"><button class="nav-link nav-group__trigger" type="button" aria-expanded="false" aria-controls="nav-menu-industries">Industries<svg viewBox="0 0 12 12" aria-hidden="true" focusable="false" class="nav-group__chevron"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"></path></svg></button><div class="nav-menu" id="nav-menu-industries" aria-hidden="true" inert=""><a class="nav-menu__link" href="./#industry-diamond-manufacturing"><span>Diamond Manufacturing ERP</span><svg class="h-4 w-4" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></a><a class="nav-menu__link" href="./#industry-jewellery-manufacturing"><span>Jewellery Manufacturing ERP</span><svg class="h-4 w-4" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></a><a class="nav-menu__link" href="./#industry-erp-startups"><span>ERP startups</span><svg class="h-4 w-4" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></a><a class="nav-menu__link" href="./#industry-smes-enterprise"><span>SMEs and enterprise</span><svg class="h-4 w-4" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></a><a class="nav-menu__all" href="./#industries"><span>All industries</span><svg class="h-4 w-4" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></a></div></div><div class="nav-group"><button class="nav-link nav-group__trigger" type="button" aria-expanded="false" aria-controls="nav-menu-services">Services<svg viewBox="0 0 12 12" aria-hidden="true" focusable="false" class="nav-group__chevron"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"></path></svg></button><div class="nav-menu" id="nav-menu-services" aria-hidden="true" inert=""><a class="nav-menu__link" href="./#services"><span>AI &amp; Intelligent Systems</span><svg class="h-4 w-4" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></a><a class="nav-menu__link" href="./#services"><span>ERP &amp; Software Development</span><svg class="h-4 w-4" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></a><a class="nav-menu__link" href="./#services"><span>Mobile App Development</span><svg class="h-4 w-4" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></a><a class="nav-menu__link" href="./#services"><span>UX Design Branding</span><svg class="h-4 w-4" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></a><a class="nav-menu__all" href="./#services"><span>All services</span><svg class="h-4 w-4" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></a></div></div><a class="nav-link" href="./about.html">About us</a><a class="nav-link" href="./contact.html">Talk to us</a></nav><div class="site-header__actions flex items-center gap-4 justify-self-end"><a class="hero-btn hidden lg:inline-flex" href="./contact.html"><span>Talk to a founder</span><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></a><button class="index-trigger md:hidden" type="button" aria-expanded="false" aria-controls="site-menu" aria-haspopup="dialog" aria-label="Open the site index"><span class="index-trigger__mark" aria-hidden="true"><i></i><i></i><b></b></span><span>Index</span></button></div></div></header><main id="top"><section class="contact-ticket" id="contact" aria-labelledby="contact-title"><h1 id="contact-title" class="rise">Your next <em>system</em> starts here</h1><p class="sub rise" style="animation-delay: 0.06s;">ERP, custom software, mobile apps, AI and UX — built around how your business actually runs. Tell us what is manual, slow or stuck; we will tell you what we would build first. We reply within one working day.</p><div class="pass rise" style="animation-delay: 0.12s;"><form class="l" novalidate=""><div class="grid"><label class="bx"><span>Full name</span><input required="" placeholder="Your name" autocomplete="name" type="text" name="name"></label><label class="bx"><span>Email address</span><input required="" pattern="[^\s@]+@[^\s@]+\.[^\s@]+" placeholder="you@company.com" autocomplete="email" type="email" name="email"></label><label class="bx"><span>Company</span><input required="" placeholder="Company name" autocomplete="organization" type="text" name="company"></label><label class="bx"><span>Phone number</span><input required="" inputmode="tel" pattern="[\d\s+()-]+" placeholder="+91 00000 00000" autocomplete="tel" type="tel" name="phone"></label><label class="bx w"><span>Message</span><textarea name="msg" required="" placeholder="Tell us about your requirements…" rows="4"></textarea></label></div><br><button class="btn" type="submit" disabled="">Submit Request</button><p class="ok" role="status">Thank you. We reply within one working day.</p></form><aside class="r"><div class="map"><iframe title="Peacock Technotrics on map" loading="lazy" referrerpolicy="no-referrer" src="https://maps.google.com/maps?q=312+Zircon+Plus,+Aamba+Talavadi,+Katargam,+Surat,+Gujarat+395004&amp;z=15&amp;output=embed"></iframe></div><address><a href="mailto:support@peacocktech.in">support@peacocktech.in</a><br><a href="tel:+919879100230">+91 987 910 0230</a><br>312 Zircon Plus, Aamba Talavadi,<br>Katargam, Surat, Gujarat 395004</address></aside></div></section></main><footer class="site-footer border-t border-line bg-paper"><div class="mx-auto flex w-full max-w-[1440px] flex-col gap-5 pt-8 pb-[max(2rem,env(safe-area-inset-bottom))] sm:flex-row sm:items-center sm:justify-between"><p class="max-w-[42ch] font-serif text-[clamp(1.1rem,1.7vw,1.4rem)] leading-snug tracking-[-.02em]">Empowering businesses through technology and innovation.</p><div class="flex flex-wrap items-center gap-x-7 gap-y-3"><nav class="lang-switch" aria-label="Language"><a href="?lang=en" lang="en" aria-current="true">EN</a><a href="?lang=gu" lang="gu">ગુ</a><a href="?lang=hi" lang="hi">हि</a></nav><p class="mono-label text-muted">© 2026 Peacock Technotrics</p><a class="mono-label inline-flex min-h-11 items-center gap-2 text-ink transition-colors hover:text-green-deep" href="#top">Back to top <span aria-hidden="true">↑</span></a></div></div></footer></div>
+</body>
+</html>

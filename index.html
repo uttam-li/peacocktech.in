@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>
+    (function () {
+      try {
+        var m = location.search.match(/[?&]lang=(gu|hi|en)\b/);
+        var l = m ? m[1] : 'en';
+        try {
+          if (m) localStorage.setItem('pt-lang', l);
+          else { var s = localStorage.getItem('pt-lang'); if (s === 'gu' || s === 'hi') l = s; }
+        } catch (e) { /* private mode: ?lang= only */ }
+        document.documentElement.lang = l;
+        var dict = {
+          gu: {
+            title: 'Peacock Technotrics | તમારા વ્યવસાયને ધ્યાનમાં રાખીને બનાવેલું સોફ્ટવેર',
+            desc: 'Peacock Technotrics સુરત, ગુજરાત, ભારતમાં સોફ્ટવેર સ્ટુડિયો છે, જે વિશ્વભરમાં વિકસતા વ્યવસાયો માટે ERP, કસ્ટમ સોફ્ટવેર, મોબાઇલ એપ્સ, AI સિસ્ટમ અને UX બનાવે છે.',
+            boot: 'સ્ટુડિયો લોડ થઈ રહ્યો છે…'
+          },
+          hi: {
+            title: 'Peacock Technotrics | आपके व्यवसाय के हिसाब से बना सॉफ़्टवेयर',
+            desc: 'Peacock Technotrics सूरत, गुजरात, भारत में एक सॉफ़्टवेयर स्टूडियो है, जो दुनियाभर में बढ़ते व्यवसायों के लिए ERP, कस्टम सॉफ़्टवेयर, मोबाइल ऐप्स, AI सिस्टम और UX बनाता है।',
+            boot: 'स्टूडियो लोड हो रहा है…'
+          }
+        };
+        var d = dict[l];
+        if (d) {
+          document.title = d.title;
+          var md = document.querySelector('meta[name="description"]');
+          if (md) md.setAttribute('content', d.desc);
+          document.addEventListener('DOMContentLoaded', function () {
+            var boot = document.getElementById('boot-text');
+            if (boot) boot.textContent = d.boot;
+          });
+        }
+      } catch (e) { /* keep English defaults */ }
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Peacock Technotrics | Software built around your business</title>
+  <meta name="description" content="Peacock Technotrics is a software studio in Surat, Gujarat, India, building ERP, custom software, mobile apps, AI systems, and UX for growing businesses worldwide.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a1510">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Peacock Technotrics | Software built around your business">
+  <meta property="og:description" content="A software studio in Surat, India. ERP, custom software, mobile apps, AI and UX, built for growing businesses worldwide.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">  <link rel="canonical" href="https://peacocktech.in/">
+  <link rel="alternate" hreflang="en" href="https://peacocktech.in/">
+  <link rel="alternate" hreflang="gu" href="https://peacocktech.in/?lang=gu">
+  <link rel="alternate" hreflang="hi" href="https://peacocktech.in/?lang=hi">
+  <link rel="alternate" hreflang="x-default" href="https://peacocktech.in/">
+  <meta property="og:url" content="https://peacocktech.in/">
+  <meta property="og:image" content="https://peacocktech.in/og-cover.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:image" content="https://peacocktech.in/og-cover.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"Peacock Technotrics","url":"https://peacocktech.in/","email":"support@peacocktech.in","telephone":"+919879100230","address":{"@type":"PostalAddress","streetAddress":"312 Zircon Plus, Aamba Talavadi, Katargam","addressLocality":"Surat","addressRegion":"Gujarat","postalCode":"395004","addressCountry":"IN"}}
+  </script>
+
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="/src/assets/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/src/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/src/assets/logo/peacock-logo-480.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="stylesheet" href="/src/styles/index.css">
+  <style>
+    .boot-fallback{min-height:100svh;display:grid;place-content:center;padding:32px;background:#0a1510}
+    .boot-fallback i{display:block;width:min(220px,50vw);height:2px;background:#223a2f;overflow:hidden;position:relative}
+    .boot-fallback i::after{content:"";position:absolute;inset:0;width:40%;background:#3fd488;animation:boot-slide 1.1s ease-in-out infinite}
+    @keyframes boot-slide{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
+    @media (prefers-reduced-motion:reduce){.boot-fallback i::after{animation:none;width:100%}}
+    .boot-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div class="boot-fallback" role="status" aria-label="Loading">
+      <i aria-hidden="true"></i>
+      <span class="boot-sr">Loading the studio…</span>
+    </div>
+  </div>
+  <noscript>
+    <div class="boot-fallback">
+      <b>Peacock Technotrics</b>
+      <span lang="en">This site needs JavaScript. Please enable it and reload.</span>
+      <span lang="gu">આ સાઇટને JavaScript જોઈએ છે. કૃપા કરીને ચાલુ કરીને ફરી લોડ કરો.</span>
+      <span lang="hi">इस साइट को JavaScript चाहिए। कृपया चालू करके फिर लोड करें।</span>
+    </div>
+  </noscript>
+  <script type="module" src="/src/app/main.tsx"></script>
+</body>
+</html>

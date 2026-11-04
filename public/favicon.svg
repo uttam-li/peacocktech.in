@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Peacock Technotrics">
+  <rect width="64" height="64" rx="14" fill="#f3f1e6"/>
+  <ellipse cx="32" cy="32" rx="23" ry="26" fill="none" stroke="#e8e000" stroke-width="5.5"/>
+  <ellipse cx="32" cy="32" rx="15" ry="18" fill="none" stroke="#b8d000" stroke-width="5.5"/>
+  <ellipse cx="32" cy="32" rx="7.5" ry="10.5" fill="none" stroke="#00a058" stroke-width="5.5"/>
+</svg>

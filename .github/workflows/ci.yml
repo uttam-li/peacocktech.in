@@ -1,0 +1,19 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bun run typecheck
+      - run: bun run lint
+      - run: bun run test
+      # Full SSG (build + SW + prerender + sitemap). ubuntu-latest ships
+      # google-chrome, which scripts/prerender.mjs uses for hydration checks.
+      - run: bun run ssg

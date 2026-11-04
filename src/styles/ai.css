@@ -1,0 +1,155 @@
+/* AI page — content ported from the approved ai-intelligent preview, restyled to
+   the site system: same tokens as about.css, locked title scale from DESIGN.md
+   (H1 600 clamp(2.7rem,min(7.6vw,12vh),6.4rem)/1.02; H2 600
+   clamp(2.3rem,5.2vw,4.6rem)/1.05; card titles 400
+   clamp(1.5rem,2.4vw,2.2rem)/1.05), Bricolage/Inter/Cascadia stacks, lime
+   emphasis, yellow reserved for the founder CTA, green-deep for every
+   hover/focus state. Reveal uses the site [data-io]/[data-in]/[data-r]
+   convention with the fast-scroll guards from the About page. */
+:root{--font-sans:"Inter","Noto Sans Gujarati","Noto Sans Devanagari",system-ui,-apple-system,"Segoe UI",sans-serif;--font-serif:"Bricolage Grotesque","Inter",system-ui,"Noto Sans Gujarati","Noto Sans Devanagari",sans-serif;--font-mono:"Cascadia Code",ui-monospace,Consolas,monospace;
+--plate:#f8faf2;--forest:#264438;--paper:#0a1510;--paper2:#10211a;--ink:#f3f1e6;--muted:#9fb2a4;--line:#223a2f;--line2:#33513f;--green:#00a058;--gd:#3fd488;--lime:#b8d000;--yellow:#e8e000;--night:#14291f;--text:#d7ddd0;--soft:#aab6ac;--ease:cubic-bezier(.22,1,.36,1);--pad:clamp(20px,4vw,64px);--head-h:78px;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--paper);scrollbar-width:none;-ms-overflow-style:none;scroll-behavior:smooth}
+html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0}
+body{margin:0;padding-top:calc(var(--head-h) + env(safe-area-inset-top));background:var(--paper);color:var(--ink);font:16px/1.5 var(--font-sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
+::selection{background:var(--yellow);color:var(--ink)}
+a{color:inherit}
+em{font-style:normal;color:var(--lime)}
+:focus-visible{outline:2px solid var(--gd);outline-offset:4px}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.06;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.dm{display:inline-block;width:6px;height:6px;background:var(--gd);transform:rotate(45deg);margin-right:10px;vertical-align:1px;flex:none}
+section[id]:not(#top){scroll-margin-top:calc(var(--head-h) + env(safe-area-inset-top) + 18px)}
+/* Sub-page header stays fixed like home: the global fixed header applies;
+   this only forces it visible (sub-pages pass visible=true, no scroll reveal).
+   header.site-header (not .site-header) so this wins over the global rule
+   even when the built CSS loads after this file. */
+header.site-header{opacity:1;pointer-events:auto;transform:none;transition:none}
+
+/* Reveal (mirrors About av4): blocks hide behind a bottom clip and wipe in on
+   scroll arrival — title first, then the lines below it. Clip-only keyframes
+   so hover transforms keep working after the wipe settles. */
+@media(prefers-reduced-motion:no-preference){
+.js [data-r]{clip-path:inset(0 0 100% 0)}
+.js [data-in] [data-r],.js [data-r][data-in]{animation:ai-sec-wipe 1s var(--ease) both;animation-delay:calc(.12s + var(--i,0)*.12s)}
+/* Fast fling (mirrors About): collapse the cascade so jumped-over sections
+   settle instantly instead of animating in pieces after arrival. */
+.js [data-fast] [data-r],.js [data-fast] .ai-copy>h1,.js [data-fast] .ai-copy>.lede,.js [data-fast] .ai-copy>.ai-acts{animation-delay:0s!important;animation-duration:.3s!important}
+}
+/* Content-item fade (mirrors About cells): rows and cards fade up one by one
+   long after the head wipe — this is the slow cascade, not the 1s wipe. */
+@media(prefers-reduced-motion:no-preference){
+.js [data-io] .ai-fade{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:calc(.55s + var(--i,0)*90ms)}
+.js [data-io][data-in] .ai-fade{opacity:1;transform:none}
+.js [data-fast] .ai-fade{transition-delay:0s!important;transition-duration:.3s!important}
+}
+@keyframes ai-sec-wipe{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+
+/* ---------- hero ---------- */
+/* stage: live pipeline desk + orbiting agent badges */
+.ai-stage{position:relative;aspect-ratio:1/1;max-width:620px;width:100%;margin-inline:auto;user-select:none;-webkit-user-select:none}
+.ai-glow{position:absolute;left:50%;top:44%;width:80%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,#3fd48833,#b8d00012 55%,transparent);animation:ai-gp 6s ease-in-out infinite}
+@keyframes ai-gp{50%{opacity:.6;transform:translate(-50%,-50%) scale(1.06)}}
+.ai-model{position:absolute;z-index:1;left:50%;top:0;height:78%;width:auto;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 26px 28px #000a)}
+.ai-model img{display:block;height:100%;width:auto}
+@keyframes ai-ping{70%,100%{box-shadow:0 0 0 9px #3fd48800}}
+.ai-ob{position:absolute;left:0;top:0;z-index:0;display:flex;align-items:center;gap:10px;padding:9px 16px 9px 13px;background:var(--paper2);border:1px solid var(--line2);border-radius:999px;box-shadow:0 16px 30px -14px #000d,0 1px 0 #fff2 inset;white-space:nowrap;pointer-events:none;will-change:transform,opacity}
+.ai-ob i{width:8px;height:8px;border-radius:50%;background:var(--gd);flex:none;box-shadow:0 0 0 0 #3fd48880;animation:ai-ping 2.4s infinite}
+.ai-ob b{display:block;font:500 .86rem/1.15 var(--font-serif)}
+.ai-ob small{display:block;font:400 11px/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gd)}
+.ai-ob.idle i{animation:none;background:var(--soft)}.ai-ob.idle small{color:var(--soft)}
+.ai-ob.warn i{background:var(--lime)}.ai-ob.warn small{color:var(--lime)}
+.ai-ob.held i{animation:none;background:var(--ink)}.ai-ob.held small{color:var(--ink)}
+
+/* ---------- sections ---------- */
+
+.viz .b{fill:var(--line2)}.viz .a{fill:var(--gd)}.viz .l{fill:var(--lime)}
+.viz .c{fill:none;stroke:var(--gd);stroke-width:1.6}.viz .d{fill:none;stroke:var(--gd);stroke-dasharray:3 3}
+.viz .t{font:9px var(--font-mono);fill:var(--soft)}.viz .k{font:9px var(--font-mono);fill:var(--paper)}
+.viz .f{stroke-dasharray:4 6;animation:ai-dash 1.6s linear infinite}
+@keyframes ai-dash{to{stroke-dashoffset:-24}}
+.viz .sc{animation:ai-scan 2.8s ease-in-out infinite alternate}
+@keyframes ai-scan{from{transform:translateY(0)}to{transform:translateY(58px)}}
+.viz .pg{transform-box:fill-box;transform-origin:center;animation:ai-pgp 2s ease-out infinite}
+@keyframes ai-pgp{from{transform:scale(1);opacity:.9}to{transform:scale(3.4);opacity:0}}
+
+/* industries panels */
+.ai-pan{display:flex;gap:12px;height:clamp(380px,56vh,470px)}
+.ai-col{position:relative;flex:1;min-width:0;overflow:hidden;background:var(--paper);border:1px solid var(--line);border-radius:22px;cursor:pointer;transition:flex .8s var(--ease),border-color .4s,background .4s}
+.ai-col:hover{border-color:var(--line2)}
+.ai-col.is-open{flex:4.4;background:var(--night);border-color:var(--line2);cursor:default}
+.ai-col__vt{position:absolute;left:50%;bottom:28px;transform:translateX(-50%) rotate(180deg);writing-mode:vertical-rl;font:400 clamp(1.6rem,2.5vw,2.3rem)/1 var(--font-serif);letter-spacing:-.03em;color:var(--muted);white-space:nowrap;transition:opacity .35s,color .3s;margin:0}
+.ai-col:hover .ai-col__vt{color:var(--ink)}
+.ai-col.is-open .ai-col__vt{opacity:0;pointer-events:none}
+.ai-col__cx{position:absolute;inset:0;width:clamp(440px,48vw,680px);padding:clamp(24px,3vw,44px);opacity:0;pointer-events:none;transition:opacity .3s}
+.ai-col.is-open .ai-col__cx{opacity:1;pointer-events:auto;transition:opacity .6s .28s}
+.ai-col__cx h3{font:600 clamp(2rem,3.4vw,3.2rem)/1.04 var(--font-serif);letter-spacing:-.035em;margin:0 0 clamp(18px,3vh,32px)}
+.ai-col__cx ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--line2)}
+.ai-col__cx li{padding:16px 0 16px 28px;border-bottom:1px solid var(--line);position:relative}
+.ai-col__cx li::before{content:"";position:absolute;left:4px;top:26px;width:6px;height:6px;background:var(--gd);transform:rotate(45deg)}
+.ai-col.is-open li{animation:ai-in .7s var(--ease) both}
+.ai-col.is-open li:nth-child(2){animation-delay:.08s}
+.ai-col.is-open li:nth-child(3){animation-delay:.16s}
+@keyframes ai-in{from{opacity:0;transform:translateY(12px)}}
+/* Hero copy entrance (finalized live variant 3): staggered clip-wipe, owns its
+   motion so the pieces carry no data-r. Stagger rides the existing --i delays. */
+@keyframes ai-copy-wipe{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+@media(prefers-reduced-motion:no-preference){
+.ai-copy>h1,.ai-copy>.lede,.ai-copy>.ai-acts{animation:ai-copy-wipe 1s var(--ease) both;animation-delay:calc(.12s + var(--i,0)*.12s)}
+}
+.ai-col__cx b{display:block;font:500 1.2rem/1.2 var(--font-serif);letter-spacing:-.02em;margin-bottom:4px}
+.ai-col__cx p{color:var(--muted);font-size:.95rem;max-width:44ch;margin:0}
+
+@media(min-width:981px){.ai-hero{display:flex;align-items:center;min-height:calc(100svh - var(--head-h))}.ai-hero__in{align-items:center}}
+
+/* practical */
+
+
+/* closing CTA */
+/* Solutions accordion (accepted variant): one open at a time, all content kept. */
+.sol-acc{border-top:1px solid var(--line2)}
+.sol-acc-h{margin:0;font:inherit}
+.sol-acc-item{border-bottom:1px solid var(--line2)}
+.sol-acc-sum{background:none;border:0;width:100%;padding:20px 4px;min-height:44px;font:inherit;color:inherit;text-align:left;cursor:pointer;display:flex;align-items:center;gap:16px}
+.sol-acc-sum .mono{color:var(--gd)}
+.sol-acc-sum b{font:400 clamp(1.4rem,2.2vw,2rem)/1.1 var(--font-serif);letter-spacing:-.02em}
+.sol-acc-tag{color:var(--soft);font-size:.9rem;margin-left:auto;text-align:right}
+.sol-acc-body{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;padding:4px 4px 28px;color:var(--text)}
+.sol-acc-body.is-hidden{display:none}
+.sol-acc-desc{margin:0;font-size:.95rem;max-width:52ch;grid-column:1}
+.sol-acc-body ul{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px;font-size:.92rem;grid-column:1}
+.sol-acc-body li{display:flex;gap:2px;align-items:baseline}
+.sol-acc-body .sol-acc-vz{grid-column:2;grid-row:1 / span 2;align-self:start;border:1px solid var(--line);border-radius:14px;background:var(--paper);padding:14px 16px 10px}
+.sol-acc-body .viz{width:100%;height:auto;max-height:110px}
+/* closing band removed: page ends on the practical section like About/Contact */
+
+@media(max-width:980px){
+.ai-hero__in{grid-template-columns:1fr;min-height:0}
+.ai-stage{max-width:480px}
+.ai-pan{flex-direction:column;height:auto}
+.ai-col,.ai-col.is-open{flex:none}
+.ai-col{min-height:76px}
+.ai-col__vt{position:static;transform:none;writing-mode:horizontal-tb;display:block;padding:24px}
+.ai-col__cx{position:static;width:auto;display:none}
+.ai-col.is-open .ai-col__cx{display:block;opacity:1;pointer-events:auto}
+.ai-col.is-open .ai-col__vt{display:none}
+.sol-acc-body{grid-template-columns:1fr}
+.sol-acc-body .sol-acc-vz{grid-column:1;grid-row:auto}
+}
+@media(max-width:520px){
+.ai-ob{padding:7px 11px 7px 10px;gap:7px}
+.ai-ob b{font-size:.74rem}.ai-ob small{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+.ai-ob i,.viz .f,.viz .sc,.viz .pg,.ai-col.is-open li{animation:none!important}
+.ai-col{transition:none}
+}
+:lang(gu) .ai-hero h1,:lang(hi) .ai-hero h1,:lang(gu) .ai-sec h2,:lang(hi) .ai-sec h2{line-height:1.3;letter-spacing:0;word-spacing:0}
+/* practical ledger (finalized) */
+.myth-ledger{list-style:none;margin:0;padding:0;border-top:1px solid var(--line2)}
+.myth-ledger li{display:grid;grid-template-columns:48px 1fr 1.2fr;gap:8px 24px;align-items:center;min-height:150px;padding:24px 4px;border-bottom:1px solid var(--line2)}
+.myth-ledger .idx{color:var(--gd);font-size:11px;letter-spacing:.1em}
+.myth-ledger s{font:400 italic clamp(1.05rem,1.6vw,1.3rem)/1.4 var(--font-serif);color:var(--soft);text-decoration-color:var(--lime);text-decoration-thickness:2px}
+.myth-ledger b{display:block;font:600 clamp(1.25rem,2vw,1.6rem)/1.15 var(--font-serif);letter-spacing:-.02em;transition:color .3s}
+.myth-ledger li:hover b{color:var(--gd)}
+.myth-ledger p{margin:6px 0 0;color:var(--muted);font-size:.92rem}
+@media(max-width:860px){.myth-ledger li{grid-template-columns:36px 1fr;min-height:230px}.myth-ledger s{grid-column:2}.myth-ledger div{grid-column:2}}
