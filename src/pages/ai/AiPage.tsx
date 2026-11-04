@@ -4,7 +4,9 @@ import Arrow from '@ui/Arrow'
 import { cssVars } from '@lib/style'
 import robotPng from '../../assets/ai/robot-working.png'
 import robotWebp from '../../assets/ai/robot-working.webp'
+import robotAvif from '../../assets/ai/robot-working.avif'
 import robotWebp2x from '../../assets/ai/robot-working-2x.webp'
+import robotAvif2x from '../../assets/ai/robot-working-2x.avif'
 
 /** Miniature output charts for the six solution tiles (decorative). */
 const VIZ = [
@@ -319,8 +321,9 @@ export default function AiPage() {
                 >
                   <div className="ai-glow" aria-hidden="true" />
                   <picture className="ai-model" aria-hidden="true">
+                    <source srcSet={`${robotAvif} 1x, ${robotAvif2x} 2x`} type="image/avif" />
                     <source srcSet={`${robotWebp} 1x, ${robotWebp2x} 2x`} type="image/webp" />
-                    <img src={robotPng} width={620} height={635} decoding="async" fetchPriority="high" alt="" draggable={false} />
+                    <img src={robotPng} width={600} height={900} decoding="async" fetchPriority="high" alt="" draggable={false} />
                   </picture>
                   {agents.map((agent, i) => (
                     <div className={`ai-ob${agent.tone ? ` ${agent.tone}` : ''}`} data-orbit="" key={i}>
