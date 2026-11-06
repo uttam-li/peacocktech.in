@@ -1,12 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { lang, T, withLang } from '@data/site'
+import { T, withLang } from '@data/site'
 import Arrow from '@ui/Arrow'
 import { cssVars } from '@lib/style'
-import robotPng from '../../assets/ai/robot-working.png'
-import robotWebp from '../../assets/ai/robot-working.webp'
-import robotAvif from '../../assets/ai/robot-working.avif'
-import robotWebp2x from '../../assets/ai/robot-working-2x.webp'
-import robotAvif2x from '../../assets/ai/robot-working-2x.avif'
 
 /** Miniature output charts for the six solution tiles (decorative). */
 const VIZ = [
@@ -17,12 +12,6 @@ const VIZ = [
   '<rect class="b" x="10" y="6" width="300" height="20" rx="6"/><rect class="a" x="10" y="6" width="258" height="20" rx="6"/><text class="k" x="20" y="20">Design A</text><rect class="b" x="10" y="32" width="300" height="20" rx="6"/><rect class="a" x="10" y="32" width="196" height="20" rx="6" opacity=".75"/><text class="k" x="20" y="46">Design B</text><rect class="b" x="10" y="58" width="300" height="20" rx="6"/><rect class="a" x="10" y="58" width="132" height="20" rx="6" opacity=".5"/><text class="k" x="20" y="72">Design C</text>',
   '<path class="d" d="M10 48H310" opacity=".6"/><polyline class="c" points="10,50 40,46 70,52 100,44 130,50 160,12 190,52 220,46 250,50 280,45 310,49"/><circle class="l pg" cx="160" cy="12" r="4"/><circle class="l" cx="160" cy="12" r="4"/><text class="t" x="172" y="14" style="fill:var(--lime)">OUTLIER</text>',
 ]
-
-interface Agent {
-  name: string
-  status: string
-  tone: '' | 'idle' | 'warn' | 'held'
-}
 
 interface Solution {
   title: string
@@ -41,17 +30,8 @@ interface IndustryUse {
 
 export default function AiPage() {
   const rootRef = useRef<HTMLDivElement | null>(null)
-  const stageRef = useRef<HTMLDivElement | null>(null)
   const [open, setOpen] = useState(0)
   const [openSol, setOpenSol] = useState(0)
-
-  const agents: Agent[] = [
-    { name: T('Research Agent', 'રિસર્ચ એજન્ટ', 'रिसर्च एजेंट'), status: T('Working', 'કામ ચાલુ', 'कार्यरत'), tone: '' },
-    { name: T('Sales Agent', 'સેલ્સ એજન્ટ', 'सेल्स एजेंट'), status: T('Ready', 'તૈયાર', 'तैयार'), tone: 'idle' },
-    { name: T('Finance Agent', 'ફાઇનાન્સ એજન્ટ', 'फ़ाइनेंस एजेंट'), status: T('Needs approval', 'મંજૂરી બાકી', 'मंज़ूरी बाकी'), tone: 'held' },
-    { name: T('Support Agent', 'સપોર્ટ એજન્ટ', 'सपोर्ट एजेंट'), status: T('Active', 'સક્રિય', 'सक्रिय'), tone: '' },
-    { name: T('Operations Agent', 'ઓપરેશન્સ એજન્ટ', 'ऑपरेशंस एजेंट'), status: T('Running', 'ચાલુ', 'चालू'), tone: 'warn' },
-  ]
 
   const solutions: Solution[] = [
     {
@@ -232,54 +212,6 @@ export default function AiPage() {
     }
   }, [])
 
-  // Orbiting agent badges around the hero stage (paused off-screen and
-  // for reduced motion, where badges rest in a static ring).
-  // Re-runs on language switch: gu/hi replaces badge DOM, so chips must be
-  // re-queried, otherwise the loop keeps moving detached English nodes.
-  useEffect(() => {
-    const stage = stageRef.current
-    if (!stage) return
-    const chips = Array.from(stage.querySelectorAll<HTMLElement>('[data-orbit]'))
-    if (!chips.length) return
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    let ang = -20
-    let visible = true
-    let raf = 0
-    const place = (): void => {
-      const narrow = stage.clientWidth < 500
-      const spread = narrow ? 30 : 34
-      chips.forEach((chip, i) => {
-        const th = ((ang + i * 72) * Math.PI) / 180
-        const depth = (Math.sin(th) + 1) / 2
-        chip.style.left = `${50 + spread * Math.cos(th)}%`
-        chip.style.top = `${40 + 13 * Math.sin(th)}%`
-        // Badges passing behind the desk fade out so the overlap reads as
-        // depth instead of clipped text.
-        chip.style.opacity = `${(0.3 + 0.7 * depth).toFixed(2)}`
-        chip.style.zIndex = Math.sin(th) > 0 ? '3' : '0'
-        chip.style.transform = `translate(-50%,-50%) scale(${(0.74 + 0.3 * depth).toFixed(3)})`
-      })
-    }
-    place()
-    if (reduce) return
-    const io = new IntersectionObserver((entries) => {
-      visible = entries[0].isIntersecting
-    })
-    io.observe(stage)
-    const tick = (): void => {
-      if (visible) {
-        ang += 0.22
-        place()
-      }
-      raf = window.requestAnimationFrame(tick)
-    }
-    raf = window.requestAnimationFrame(tick)
-    return () => {
-      window.cancelAnimationFrame(raf)
-      io.disconnect()
-    }
-  }, [lang])
-
   const hoverPanels = (): boolean =>
     window.matchMedia('(hover:hover) and (min-width:981px)').matches
 
@@ -313,24 +245,12 @@ export default function AiPage() {
                 <div
                   className="ai-stage"
                   id="ai-stage"
-                  ref={stageRef}
                   role="img"
-                  aria-label={T('AI agents working around your business data', 'તમારા વ્યવસાય ડેટાની આસપાસ કામ કરતા AI એજન્ટ', 'आपके व्यवसाय डेटा के इर्द-गिर्द काम करते AI एजेंट')}
+                  aria-label={T('AI paperwork desk answering certificate questions', 'પ્રમાણપત્રના સવાલોના જવાબ આપતું AI દસ્તાવેજ ડેસ્ક', 'प्रमाणपत्र के सवालों का जवाब देता AI दस्तावेज़ डेस्क')}
                   data-r=""
                   style={cssVars({ '--i': 1 })}
                 >
-                  <div className="ai-glow" aria-hidden="true" />
-                  <picture className="ai-model" aria-hidden="true">
-                    <source srcSet={`${robotAvif} 1x, ${robotAvif2x} 2x`} type="image/avif" />
-                    <source srcSet={`${robotWebp} 1x, ${robotWebp2x} 2x`} type="image/webp" />
-                    <img src={robotPng} width={600} height={900} decoding="async" fetchPriority="high" alt="" draggable={false} />
-                  </picture>
-                  {agents.map((agent, i) => (
-                    <div className={`ai-ob${agent.tone ? ` ${agent.tone}` : ''}`} data-orbit="" key={i}>
-                      <i aria-hidden="true" />
-                      <div><b>{agent.name}</b><small>{agent.status}</small></div>
-                    </div>
-                  ))}
+                  <div className="avtake"><div className="chead"><i/><i/><i/>{T('PEACOCK AI · PAPERWORK DESK', 'PEACOCK AI · દસ્તાવેજ ડેસ્ક', 'PEACOCK AI · दस्तावेज़ डेस्क')}<span className="live"><i/>{T('LIVE', 'લાઇવ', 'लाइव')}</span></div><div className="bubble user">{T('Verify GIA 6147281933.', 'GIA 6147281933 ચકાસો.', 'GIA 6147281933 सत्यापित करें।')}</div><div className="bubble ai"><b>{T('1.02 ct Round, F · VS1.', '1.02 ct Round, F · VS1.', '1.02 ct Round, F · VS1.')}</b>{T(' Measures 6.44 × 6.47 mm.', ' માપ 6.44 × 6.47 mm.', ' माप 6.44 × 6.47 mm।')}<small>{T('EXTRACTED FROM CERT · 2 SEC', 'સર્ટિફિકેટમાંથી · 2 સેકન્ડ', 'प्रमाणपत्र से · 2 सेकंड')}</small></div><div className="bubble user">{T('Does it match the stone?', 'શું તે પથ્થર સાથે મેળ ખાય છે?', 'क्या यह पत्थर से मेल खाता है?')}</div><div className="bubble ai"><b>{T('Yes — matches parcel #A-118.', 'હા — પાર્સલ #A-118 સાથે મેળ ખાય છે.', 'हाँ — पार्सल #A-118 से मेल खाता है।')}</b>{T(' Cleared for listing.', ' લિસ્ટિંગ માટે મંજૂર.', ' सूचीबद्धता हेतु स्वीकृत।')}<small>{T('MATCH · 99.1%', 'મેળ · 99.1%', 'मेल · 99.1%')}</small></div></div>
                 </div>
               </div>
 

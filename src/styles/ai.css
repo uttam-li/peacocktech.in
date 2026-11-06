@@ -45,20 +45,20 @@ header.site-header{opacity:1;pointer-events:auto;transform:none;transition:none}
 @keyframes ai-sec-wipe{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
 
 /* ---------- hero ---------- */
-/* stage: live pipeline desk + orbiting agent badges */
+/* stage: live AI desk panel (finalized from live variants) */
 .ai-stage{position:relative;aspect-ratio:1/1;max-width:620px;width:100%;margin-inline:auto;user-select:none;-webkit-user-select:none}
-.ai-glow{position:absolute;left:50%;top:44%;width:80%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,#3fd48833,#b8d00012 55%,transparent);animation:ai-gp 6s ease-in-out infinite}
-@keyframes ai-gp{50%{opacity:.6;transform:translate(-50%,-50%) scale(1.06)}}
-.ai-model{position:absolute;z-index:1;left:50%;top:0;height:78%;width:auto;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 26px 28px #000a)}
-.ai-model img{display:block;height:100%;width:auto}
-@keyframes ai-ping{70%,100%{box-shadow:0 0 0 9px #3fd48800}}
-.ai-ob{position:absolute;left:0;top:0;z-index:0;display:flex;align-items:center;gap:10px;padding:9px 16px 9px 13px;background:var(--paper2);border:1px solid var(--line2);border-radius:999px;box-shadow:0 16px 30px -14px #000d,0 1px 0 #fff2 inset;white-space:nowrap;pointer-events:none;will-change:transform,opacity}
-.ai-ob i{width:8px;height:8px;border-radius:50%;background:var(--gd);flex:none;box-shadow:0 0 0 0 #3fd48880;animation:ai-ping 2.4s infinite}
-.ai-ob b{display:block;font:500 .86rem/1.15 var(--font-serif)}
-.ai-ob small{display:block;font:400 11px/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gd)}
-.ai-ob.idle i{animation:none;background:var(--soft)}.ai-ob.idle small{color:var(--soft)}
-.ai-ob.warn i{background:var(--lime)}.ai-ob.warn small{color:var(--lime)}
-.ai-ob.held i{animation:none;background:var(--ink)}.ai-ob.held small{color:var(--ink)}
+.ai-stage .avtake{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;gap:10px;border-radius:20px;padding:22px;background:#0d1d14;border:1px solid var(--line2);box-shadow:0 24px 60px #000c;overflow:hidden}
+.ai-stage .avtake .chead{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--muted)}
+.ai-stage .avtake .chead i{width:8px;height:8px;border-radius:50%;background:var(--line2)}
+.ai-stage .avtake .chead i:first-child{background:var(--gd);box-shadow:0 0 8px var(--gd)}
+.ai-stage .avtake .chead .live{margin-left:auto;color:var(--gd);display:flex;align-items:center;gap:6px}
+.ai-stage .avtake .chead .live i{background:var(--gd);box-shadow:0 0 8px var(--gd);animation:avblink 1.6s infinite}
+.ai-stage .avtake .bubble{max-width:88%;border-radius:14px;padding:11px 14px;font-size:.86rem;line-height:1.5}
+.ai-stage .avtake .bubble.user{align-self:flex-end;background:#16281e;border:1px solid var(--line2);color:var(--pearl)}
+.ai-stage .avtake .bubble.ai{align-self:flex-start;background:#0a1710;border:1px solid color-mix(in srgb, var(--gd) 40%, transparent);color:var(--ink)}
+.ai-stage .avtake .bubble.ai b{color:var(--pearl)}
+.ai-stage .avtake .bubble.ai small{display:block;margin-top:6px;font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;color:var(--gd)}
+@keyframes avblink{0%,100%{opacity:.25}50%{opacity:1}}
 
 /* ---------- sections ---------- */
 
@@ -136,11 +136,10 @@ header.site-header{opacity:1;pointer-events:auto;transform:none;transition:none}
 .sol-acc-body .sol-acc-vz{grid-column:1;grid-row:auto}
 }
 @media(max-width:520px){
-.ai-ob{padding:7px 11px 7px 10px;gap:7px}
-.ai-ob b{font-size:.74rem}.ai-ob small{font-size:9px}
+.ai-stage .avtake .bubble{font-size:.8rem}
 }
 @media(prefers-reduced-motion:reduce){
-.ai-ob i,.viz .f,.viz .sc,.viz .pg,.ai-col.is-open li{animation:none!important}
+.viz .f,.viz .sc,.viz .pg,.ai-col.is-open li,.ai-stage .avtake .live i{animation:none!important}
 .ai-col{transition:none}
 }
 :lang(gu) .ai-hero h1,:lang(hi) .ai-hero h1,:lang(gu) .ai-sec h2,:lang(hi) .ai-sec h2{line-height:1.3;letter-spacing:0;word-spacing:0}
