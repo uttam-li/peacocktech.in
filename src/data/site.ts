@@ -184,7 +184,7 @@ const services: ServicesSection = {
     { id: 'mobile', title: T('Mobile App Development', 'મોબાઇલ એપ ડેવલપમેન્ટ', 'मोबाइल ऐप डेवलपमेंट'),
       line: T('Mobile apps for your customers and your field teams.', 'તમારા ગ્રાહકો અને ફિલ્ડ ટીમ માટે મોબાઇલ એપ્સ.', 'आपके ग्राहकों और फ़ील्ड टीमों के लिए मोबाइल ऐप्स.'),
       tags: [T('Customer apps', 'ગ્રાહક એપ્સ', 'ग्राहक ऐप्स'), T('Field teams', 'ફિલ્ડ ટીમ', 'फ़ील्ड टीमें')], href: '/mobile-app' },
-    { id: 'ux', title: T('UX Design Branding', 'UX ડિઝાઇન બ્રાન્ડિંગ', 'UX डिज़ाइन ब्रांडिंग'),
+    { id: 'ux', title: T('UX Design & Branding', 'UX ડિઝાઇન બ્રાન્ડિંગ', 'UX डिज़ाइन ब्रांडिंग'),
       line: T('Interfaces and identity that make software easy to use.', 'સોફ્ટવેર વાપરવામાં સરળ લાગે તેવા ઇન્ટરફેસ અને ઓળખ.', 'ऐसे इंटरफ़ेस और पहचान जो सॉफ़्टवेयर को आसान बनाएँ.'),
       tags: [T('UX design', 'UX ડિઝાઇન', 'UX डिज़ाइन'), T('Branding', 'બ્રાન્ડિંગ', 'ब्रांडिंग')], href: '/ux-design' },
   ],
