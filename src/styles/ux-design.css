@@ -149,6 +149,8 @@ h1{margin-top:0!important}
 .fg5-rmx:hover{background:var(--gd);border-color:var(--gd);color:var(--forest)}
 .fg5-rmx:focus-visible{outline:0;background:var(--gd);border-color:var(--gd);color:var(--forest);box-shadow:0 0 0 3px rgba(63,212,136,.4)}
 .fg5-split{display:grid;grid-template-columns:.9fr 1.1fr;gap:14px;margin-top:16px}
+.fg5-split > *{min-width:0}
+.fg5-row b{overflow-wrap:anywhere}
 .fg5-id{position:relative;background:var(--night);border:1px solid var(--line2);border-radius:20px;padding:28px 24px;box-shadow:0 22px 48px -24px rgba(0,0,0,.8);overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;gap:6px;transition:border-color .3s}
 .fg5-id:hover,.fg5-list:hover{border-color:var(--gd)}
 .fg5-n{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--muted)}
