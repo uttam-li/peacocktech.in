@@ -1,7 +1,21 @@
 import { useEffect, useRef, useState } from 'react'
+import type { FormEvent } from 'react'
 import { T, withLang } from '@data/site'
 import Arrow from '@ui/Arrow'
 import { cssVars } from '@lib/style'
+
+/** Reply selector for the AI hero desk demo (pure, language-independent). */
+export type DeskReplyKind = 'cert' | 'match' | 'price' | 'hello' | 'talk' | 'fallback'
+
+export function deskReplyKind(q: string): DeskReplyKind {
+  const s = q.toLowerCase()
+  if (/gia|cert|report|verify|6147|સર્ટિ|प्रमाण|सत्याप|praman|satya/.test(s)) return 'cert'
+  if (/parcel|પાર્સલ|पार्सल|મેળ|मेल|milan|compare|stone|પથ્થર|पत्थर/.test(s)) return 'match'
+  if (/price|rate|cost|discount|ભાવ|भाव|કિંમત|कीमत|bhav|kimat/.test(s)) return 'price'
+  if (/founder|ફાઉન્ડર|फ़ाउंडर|human|માણસ|मानव|call|contact|સંપર્ક|संपर्क|sampark|phone|baat|વાત/.test(s)) return 'talk'
+  if (s.length < 20 && (/\b(hi|hello|hey)\b/.test(s) || /namaste|નમસ્તે|नमस्ते|kem ?cho|કેમ ?છો/.test(s))) return 'hello'
+  return 'fallback'
+}
 
 /** Miniature output charts for the six solution tiles (decorative). */
 const VIZ = [
@@ -32,6 +46,76 @@ export default function AiPage() {
   const rootRef = useRef<HTMLDivElement | null>(null)
   const [open, setOpen] = useState(0)
   const [openSol, setOpenSol] = useState(0)
+  const [deskInput, setDeskInput] = useState('')
+  const [deskExtra, setDeskExtra] = useState<Array<{ id: number; role: 'user' | 'ai'; text: string; kind: DeskReplyKind }>>([])
+  const [deskTyping, setDeskTyping] = useState(false)
+  const deskMsgsRef = useRef<HTMLDivElement | null>(null)
+  const deskId = useRef(0)
+  const deskTimer = useRef(0)
+
+  const deskReply: Record<DeskReplyKind, { b: string; rest: string; tag: string }> = {
+    cert: {
+      b: T('Send any GIA number.', 'કોઈપણ GIA નંબર મોકલો.', 'कोई भी GIA नंबर भेजें।'),
+      rest: T(' I read the cert in seconds and match it to the parcel.', ' હું સર્ટિફિકેટ સેકન્ડોમાં વાંચું છું અને પાર્સલ સાથે મેળવું છું.', ' मैं प्रमाणपत्र सेकंडों में पढ़ता हूँ और पार्सल से मिलाता हूँ।'),
+      tag: T('GIA CHECK · ~2 SEC', 'GIA તપાસ · ~2 સેકન્ડ', 'GIA जाँच · ~2 सेकंड'),
+    },
+    match: {
+      b: T('Tell me the parcel ID.', 'પાર્સલ ID જણાવો.', 'पार्सल ID बताएँ।'),
+      rest: T(' I compare the stone against the cert and clear it for listing.', ' હું પથ્થરને સર્ટિફિકેટ સાથે સરખાવું છું અને લિસ્ટિંગ માટે મંજૂર કરું છું.', ' मैं पत्थर की प्रमाणपत्र से तुलना करता हूँ और सूचीबद्धता हेतु स्वीकृत करता हूँ।'),
+      tag: T('MATCH · 99.1%', 'મેળ · 99.1%', 'मेल · 99.1%'),
+    },
+    price: {
+      b: T('Pricing is live-market.', 'ભાવ લાઇવ-બજાર પ્રમાણે.', 'भाव लाइव-बाज़ार के अनुसार।'),
+      rest: T(' Send the parcel + cert — the founder replies with the day price.', ' પાર્સલ + સર્ટિફિકેટ મોકલો — ફાઉન્ડર દિવસનો ભાવ જણાવશે.', ' पार्सल + प्रमाणपत्र भेजें — फ़ाउंडर दिन का भाव बताएँगे।'),
+      tag: T('PRICE · ON REQUEST', 'ભાવ · વિનંતી પર', 'भाव · अनुरोध पर'),
+    },
+    hello: {
+      b: T('Hello — this is a demo desk.', 'નમસ્તે — આ ડેમો ડેસ્ક છે.', 'नमस्ते — यह डेमो डेस्क है।'),
+      rest: T(' Try a GIA number or a parcel ID.', ' GIA નંબર કે પાર્સલ ID અજમાવો.', ' GIA नंबर या पार्सल ID आज़माएँ।'),
+      tag: T('DEMO · NO SIGNUP', 'ડેમો · સાઇનઅપ નથી', 'डेमो · साइनअप नहीं'),
+    },
+    talk: {
+      b: T('Want a human?', 'માણસ સાથે વાત કરવી છે?', 'इंसान से बात करनी है?'),
+      rest: T(' Use Discuss your AI project — the founder replies directly.', ' Discuss your AI project વાપરો — ફાઉન્ડર સીધો જવાબ આપશે.', ' Discuss your AI project दबाएँ — फ़ाउंडर सीधे जवाब देंगे।'),
+      tag: T('HUMAN · FOUNDER', 'માનવ · ફાઉન્ડર', 'मानव · फ़ाउंडर'),
+    },
+    fallback: {
+      b: T('Noted.', 'નોંધ્યું.', 'समझ गया।'),
+      rest: T(' Ask for a GIA check, a parcel match, or the day price.', ' GIA તપાસ, પાર્સલ મેળ કે દિવસનો ભાવ પૂછો.', ' GIA जाँच, पार्सल मेल या दिन का भाव पूछें।'),
+      tag: T('DEMO · INSTANT', 'ડેમો · તરત', 'डेमो · तुरंत'),
+    },
+  }
+
+  const sendDesk = (e: FormEvent): void => {
+    e.preventDefault()
+    const q = deskInput.trim()
+    if (!q || deskTyping) return
+    deskId.current += 1
+    const mine = deskId.current
+    const kind = deskReplyKind(q)
+    if (deskTimer.current) window.clearTimeout(deskTimer.current)
+    setDeskExtra((p) => [...p.slice(-11), { id: mine, role: 'user', text: q, kind }])
+    setDeskInput('')
+    setDeskTyping(true)
+    const instant =
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      document.documentElement.classList.contains('low-power')
+    deskTimer.current = window.setTimeout(() => {
+      deskId.current += 1
+      setDeskExtra((p) => [...p.slice(-11), { id: deskId.current, role: 'ai', text: '', kind }])
+      setDeskTyping(false)
+      deskTimer.current = 0
+    }, instant ? 0 : 900)
+  }
+
+  useEffect(() => () => {
+    if (deskTimer.current) window.clearTimeout(deskTimer.current)
+  }, [])
+
+  useEffect(() => {
+    const el = deskMsgsRef.current
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior: 'auto' })
+  }, [deskExtra, deskTyping])
 
   const solutions: Solution[] = [
     {
@@ -245,12 +329,12 @@ export default function AiPage() {
                 <div
                   className="ai-stage"
                   id="ai-stage"
-                  role="img"
+                  role="group"
                   aria-label={T('AI paperwork desk answering certificate questions', 'પ્રમાણપત્રના સવાલોના જવાબ આપતું AI દસ્તાવેજ ડેસ્ક', 'प्रमाणपत्र के सवालों का जवाब देता AI दस्तावेज़ डेस्क')}
                   data-r=""
                   style={cssVars({ '--i': 1 })}
                 >
-                  <div className="avtake"><div className="chead"><i/><i/><i/>{T('PEACOCK AI · PAPERWORK DESK', 'PEACOCK AI · દસ્તાવેજ ડેસ્ક', 'PEACOCK AI · दस्तावेज़ डेस्क')}<span className="live"><i/>{T('LIVE', 'લાઇવ', 'लाइव')}</span></div><div className="bubble user">{T('Verify GIA 6147281933.', 'GIA 6147281933 ચકાસો.', 'GIA 6147281933 सत्यापित करें।')}</div><div className="bubble ai"><b>{T('1.02 ct Round, F · VS1.', '1.02 ct Round, F · VS1.', '1.02 ct Round, F · VS1.')}</b>{T(' Measures 6.44 × 6.47 mm.', ' માપ 6.44 × 6.47 mm.', ' माप 6.44 × 6.47 mm।')}<small>{T('EXTRACTED FROM CERT · 2 SEC', 'સર્ટિફિકેટમાંથી · 2 સેકન્ડ', 'प्रमाणपत्र से · 2 सेकंड')}</small></div><div className="bubble user">{T('Does it match the stone?', 'શું તે પથ્થર સાથે મેળ ખાય છે?', 'क्या यह पत्थर से मेल खाता है?')}</div><div className="bubble ai"><b>{T('Yes — matches parcel #A-118.', 'હા — પાર્સલ #A-118 સાથે મેળ ખાય છે.', 'हाँ — पार्सल #A-118 से मेल खाता है।')}</b>{T(' Cleared for listing.', ' લિસ્ટિંગ માટે મંજૂર.', ' सूचीबद्धता हेतु स्वीकृत।')}<small>{T('MATCH · 99.1%', 'મેળ · 99.1%', 'मेल · 99.1%')}</small></div></div>
+                  <div className="avtake"><div className="chead"><i/><i/><i/>{T('PEACOCK AI · PAPERWORK DESK', 'PEACOCK AI · દસ્તાવેજ ડેસ્ક', 'PEACOCK AI · दस्तावेज़ डेस्क')}<span className="live"><i/>{T('LIVE', 'લાઇવ', 'लाइव')}</span></div><div className="amsgs" ref={deskMsgsRef} role="log" aria-live="polite" aria-label={T('Demo conversation', 'ડેમો વાતચીત', 'डेमो बातचीत')}><div className="bubble user">{T('Verify GIA 6147281933.', 'GIA 6147281933 ચકાસો.', 'GIA 6147281933 सत्यापित करें।')}</div><div className="bubble ai"><b>{T('1.02 ct Round, F · VS1.', '1.02 ct Round, F · VS1.', '1.02 ct Round, F · VS1.')}</b>{T(' Measures 6.44 × 6.47 mm.', ' માપ 6.44 × 6.47 mm.', ' माप 6.44 × 6.47 mm।')}<small>{T('EXTRACTED FROM CERT · 2 SEC', 'સર્ટિફિકેટમાંથી · 2 સેકન્ડ', 'प्रमाणपत्र से · 2 सेकंड')}</small></div><div className="bubble user">{T('Does it match the stone?', 'શું તે પથ્થર સાથે મેળ ખાય છે?', 'क्या यह पत्थर से मेल खाता है?')}</div><div className="bubble ai"><b>{T('Yes — matches parcel #A-118.', 'હા — પાર્સલ #A-118 સાથે મેળ ખાય છે.', 'हाँ — पार्सल #A-118 से मेल खाता है।')}</b>{T(' Cleared for listing.', ' લિસ્ટિંગ માટે મંજૂર.', ' सूचीबद्धता हेतु स्वीकृत।')}<small>{T('MATCH · 99.1%', 'મેળ · 99.1%', 'मेल · 99.1%')}</small></div>{deskExtra.map((m) => (m.role === 'user' ? (<div className="bubble user" key={m.id}>{m.text}</div>) : (<div className="bubble ai" key={m.id}><b>{deskReply[m.kind].b}</b>{deskReply[m.kind].rest}<small>{deskReply[m.kind].tag}</small></div>)))}{deskTyping ? (<div className="bubble ai typing" role="status" aria-label={T('Peacock AI is typing', 'Peacock AI લખી રહ્યું છે', 'Peacock AI लिख रहा है')}><i/><i/><i/></div>) : null}</div><form className="abox" onSubmit={sendDesk}><label className="asr" htmlFor="ai-desk-input">{T('Ask the paperwork desk', 'દસ્તાવેજ ડેસ્કને પૂછો', 'दस्तावेज़ डेस्क से पूछें')}</label><input id="ai-desk-input" value={deskInput} onChange={(e) => setDeskInput(e.target.value)} placeholder={T('Ask about a certificate…', 'સર્ટિફિકેટ વિશે પૂછો…', 'प्रमाणपत्र के बारे में पूछें…')} autoComplete="off" maxLength={140} /><button className="hero-btn asend" type="submit" disabled={!deskInput.trim()}>{T('Send', 'મોકલો', 'भेजें')}</button></form></div>
                 </div>
               </div>
 
