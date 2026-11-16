@@ -47,10 +47,11 @@ header.site-header{opacity:1;pointer-events:auto;transform:none;transition:none}
 /* ---------- hero ---------- */
 /* stage: live AI desk panel (finalized from live variants) */
 .ai-stage{position:relative;aspect-ratio:1/1;max-width:620px;width:100%;margin-inline:auto;user-select:none;-webkit-user-select:none}
-.ai-stage .avtake{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;gap:10px;border-radius:20px;padding:22px;background:#0d1d14;border:1px solid var(--line2);box-shadow:0 24px 60px #000c;overflow:hidden}
+.ai-stage .avtake{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;gap:10px;border-radius:20px;padding:22px;background:#050c09;border:1px solid var(--line2);box-shadow:0 24px 60px #000c;overflow:hidden}
 .ai-stage .avtake .chead{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--muted)}
 .ai-stage .avtake .chead i{width:8px;height:8px;border-radius:50%;background:var(--line2)}
-.ai-stage .avtake .chead i:first-child{background:var(--gd);box-shadow:0 0 8px var(--gd)}
+.ai-stage .avtake .chead i:first-child{background:var(--gd);animation:term-blink 1.1s steps(1) infinite}
+@keyframes term-blink{50%{opacity:0}}
 .ai-stage .avtake .chead .live{margin-left:auto;color:var(--gd);display:flex;align-items:center;gap:6px}
 .ai-stage .avtake .chead .live i{background:var(--gd);box-shadow:0 0 8px var(--gd);animation:avblink 1.6s infinite}
 .ai-stage .avtake .bubble{max-width:88%;border-radius:14px;padding:11px 14px;font-size:.86rem;line-height:1.5}
@@ -151,7 +152,7 @@ header.site-header{opacity:1;pointer-events:auto;transform:none;transition:none}
 .ai-stage .avtake .bubble{font-size:.8rem}
 }
 @media(prefers-reduced-motion:reduce){
-.viz .f,.viz .sc,.viz .pg,.ai-col.is-open li,.ai-stage .avtake .live i,.ai-stage .typing i{animation:none!important}
+.viz .f,.viz .sc,.viz .pg,.ai-col.is-open li,.ai-stage .avtake .live i,.ai-stage .typing i,.ai-stage .avtake .chead i:first-child{animation:none!important}
 .ai-col{transition:none}
 }
 :lang(gu) .ai-hero h1,:lang(hi) .ai-hero h1,:lang(gu) .ai-sec h2,:lang(hi) .ai-sec h2{line-height:1.3;letter-spacing:0;word-spacing:0}
